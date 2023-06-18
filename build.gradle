@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.0'
 }
 
-group = 'com.example'
+group = 'com.example.board'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -19,15 +19,17 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-actuator:3.1.0'
-    implementation 'org.springframework.boot:spring-boot-devtools:3.0.4'
-    implementation 'com.mysql:mysql-connector-j:8.0.32'
-    implementation 'org.springframework.data:spring-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-actuator'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'javax.persistence:javax.persistence-api:2.2'
+    implementation 'org.springframework:spring-aspects' // Replace with your desired version
 
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+    implementation 'org.hibernate:hibernate-core:6.1.7.Final'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta:2.15.1'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2:2.1.214'
