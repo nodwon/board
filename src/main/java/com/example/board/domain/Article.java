@@ -20,9 +20,8 @@ import java.util.Set;
 @Getter
 @ToString
 @Table( name = "article")
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+public class Article extends AuditingFields{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,22 +44,6 @@ public class Article {
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
     protected Article() {}
-
-    @CreatedDate
-    @Column(name = "createdAt")
-    private LocalDateTime createdAt; // 생성일시 auditing
-
-    @CreatedBy
-    @Column(name = "createdBy", length = 100)
-    private String createdBy; // 생성자
-
-    @LastModifiedDate
-    @Column(name = "modifiedAt")
-    private LocalDateTime modifiedAt; // 수정일시
-
-    @LastModifiedBy
-    @Column(name = "modifiedBy", length = 100)
-    private String modifiedBy; // 수정자
 
 
     public Article(String title, String content, String hashtag) {

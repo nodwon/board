@@ -2,17 +2,20 @@ package com.example.board.repository;
 
 import com.example.board.config.JpaConfig;
 import com.example.board.domain.Article;
-import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("testdb")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 테스트데이터를 따로불러오지않고 다른것을가죠옴
 @DisplayName("JPA 연결테스트")
 @Import(JpaConfig.class)
 @DataJpaTest
@@ -42,11 +45,11 @@ class JpaRepositoryTest {
     @Test
     public void insert () throws Exception {
         //given
-        Article article = articleRepository.findById(1L).orElseThrow();
+        articleRepository.findById(1L).orElseThrow();
         long previousCount = articleRepository.count();
 
         //when
-        Article savedArticle = articleRepository.save(Article.of("new article", "new content", "#spring"));
+        articleRepository.save(Article.of("new article", "new content", "#spring"));
         //then
         assertThat(articleRepository.count()).isEqualTo(previousCount +1);
     }
@@ -57,7 +60,7 @@ class JpaRepositoryTest {
         Article article = articleRepository.findById(1L).orElseThrow();
         String updatedHashtag = "#springboot";
         article.setHashtag(updatedHashtag);
-        long previousCount = articleRepository.count();
+        articleRepository.count();
 
         //when
         Article savedArticle = articleRepository.save(article);
