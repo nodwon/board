@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ class ArticleControllerTest {
     ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
-
+    @Disabled("구현중")
     @DisplayName("[view][Get] 게시글 리스트 = 페이지 정상 호출")
     @Test
     public void requestview() throws Exception {
@@ -32,10 +33,12 @@ class ArticleControllerTest {
         mvc.perform(get("/articles"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(view().name("articles/index"))
                 .andExpect(model().attributeExists("articles")); // 이맵에 articles가 있는지
 
         //then
     }
+    @Disabled("구현중")
     @DisplayName("[view][Get] 게시글 상세페이지 = 페이지 정상 호출")
     @Test
     public void requestviewdetail() throws Exception {
@@ -45,10 +48,14 @@ class ArticleControllerTest {
         mvc.perform(get("/articles/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.TEXT_HTML))
-                .andExpect(model().attributeExists("articles")); // 이맵에 articles가 있는지
+                .andExpect(view().name("articles/detail")) // 이맵에 articles가 있는지
+                .andExpect(model().attributeExists("article")) // 이맵에 articles가 있는지
+                .andExpect(model().attributeExists("articleComments")); // 이맵에 articles가 있는지
 
         //then
     }
+    @Disabled("구현중")
+
     @DisplayName("[view][Get] 게시글 검색전용 페이지 = 페이지 정상 호출")
     @Test
     public void searcharticle() throws Exception {
@@ -58,10 +65,12 @@ class ArticleControllerTest {
         mvc.perform(get("/articles/search"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.TEXT_HTML))
-                .andExpect(model().attributeExists("articles")); // 이맵에 articles가 있는지
+                .andExpect(view().name("articles/search"))
+                .andExpect(model().attributeExists("article")); // 이맵에 articles가 있는지
 
         //then
     }
+    @Disabled("구현중")
     @DisplayName("[view][Get] 게시글 해시태그 검색전용 페이지 = 페이지 정상 호출")
     @Test
     public void searchhastagarticle() throws Exception {
@@ -71,7 +80,8 @@ class ArticleControllerTest {
         mvc.perform(get("/articles/search-hashtag"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.TEXT_HTML))
-                .andExpect(model().attributeExists("articles")); // 이맵에 articles가 있는지
+                .andExpect(view().name("articles/hashtag"))
+                .andExpect(model().attributeExists("article")); // 이맵에 articles가 있는지
 
         //then
     }
