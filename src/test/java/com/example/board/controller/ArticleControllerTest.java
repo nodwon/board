@@ -23,16 +23,15 @@ class ArticleControllerTest {
     ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
-    @Disabled("구현중")
     @DisplayName("[view][Get] 게시글 리스트 = 페이지 정상 호출")
     @Test
     public void requestview() throws Exception {
         //given
 
         //when
-        mvc.perform(get("/articles"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+        mvc.perform(get("/articles/index"))
+                .andExpect(status().isOk()) // 200 으로 떨어져야하고
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML)) // text.ht
                 .andExpect(view().name("articles/index"))
                 .andExpect(model().attributeExists("articles")); // 이맵에 articles가 있는지
 
@@ -47,7 +46,7 @@ class ArticleControllerTest {
         //when
         mvc.perform(get("/articles/1"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/detail")) // 이맵에 articles가 있는지
                 .andExpect(model().attributeExists("article")) // 이맵에 articles가 있는지
                 .andExpect(model().attributeExists("articleComments")); // 이맵에 articles가 있는지
@@ -64,7 +63,7 @@ class ArticleControllerTest {
         //when
         mvc.perform(get("/articles/search"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/search"))
                 .andExpect(model().attributeExists("article")); // 이맵에 articles가 있는지
 
@@ -79,7 +78,7 @@ class ArticleControllerTest {
         //when
         mvc.perform(get("/articles/search-hashtag"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/hashtag"))
                 .andExpect(model().attributeExists("article")); // 이맵에 articles가 있는지
 
