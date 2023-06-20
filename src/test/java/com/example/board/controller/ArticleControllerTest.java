@@ -29,7 +29,7 @@ class ArticleControllerTest {
         //given
 
         //when
-        mvc.perform(get("/articles/index"))
+        mvc.perform(get("/articles"))
                 .andExpect(status().isOk()) // 200 으로 떨어져야하고
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML)) // text.ht
                 .andExpect(view().name("articles/index"))
