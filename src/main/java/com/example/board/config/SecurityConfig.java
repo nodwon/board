@@ -6,9 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static javax.management.Query.and;
-import static org.springframework.security.config.annotation.web.configurers.PermitAllSupport.permitAll;
-import static sun.net.ftp.FtpDirEntry.Permission.USER;
+
 
 @Configuration
 public class SecurityConfig {

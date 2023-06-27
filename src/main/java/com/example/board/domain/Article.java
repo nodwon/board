@@ -1,18 +1,10 @@
 package com.example.board.domain;
 
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -26,8 +18,10 @@ public class Article extends AuditingFields{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter@ManyToOne(optional = false)
-    private UserAccount account;
+    @Setter
+    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = false)
+    private UserAccount userAccount; // 유저 정보 (ID)
 
     @Setter
     @Column(name = "title")
@@ -49,14 +43,15 @@ public class Article extends AuditingFields{
     protected Article() {}
 
 
-    public Article(String title, String content, String hashtag) {
+    public Article(UserAccount userAccount,String title, String content, String hashtag) {
+        this.userAccount = userAccount;
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
 
-    public static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
+    public static Article of(UserAccount userAccount,String title, String content, String hashtag) {
+        return new Article(userAccount,title, content, hashtag);
     }
 
     @Override
