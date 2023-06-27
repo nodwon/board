@@ -1,7 +1,9 @@
 package com.example.board.service;
 
+import com.example.board.domain.Article;
 import com.example.board.domain.type.SearchType;
 import com.example.board.dto.ArticleDto;
+import com.example.board.dto.ArticleUpdateDto;
 import com.example.board.repository.ArticleRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +13,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
+import static org.mockito.BDDMockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("비지니스 로직 - 게시글")
 @ExtendWith(MockitoExtension.class)

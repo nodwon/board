@@ -26,6 +26,9 @@ public class Article extends AuditingFields{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter@ManyToOne(optional = false)
+    private UserAccount account;
+
     @Setter
     @Column(name = "title")
     private String title; // 제목
