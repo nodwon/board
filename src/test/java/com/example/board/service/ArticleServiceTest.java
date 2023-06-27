@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,7 +39,7 @@ class ArticleServiceTest {
     public void searchParmeter_articles() throws Exception {
         //given
         //when
-        Page<ArticleDto> articles = sut.searchArticles(SearchType.TITLE, "search keyword");// 제목, 본문, ID, 닉네임, 해시테크
+        Page<ArticleDto> articles = sut.searchArticles(SearchType.TITLE, "search keyword", Pageable.unpaged());// 제목, 본문, ID, 닉네임, 해시테크
         //then
         assertThat(articles).isNotNull();
     }
