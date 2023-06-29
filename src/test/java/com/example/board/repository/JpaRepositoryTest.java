@@ -2,17 +2,22 @@ package com.example.board.repository;
 
 import com.example.board.config.JpaConfig;
 import com.example.board.domain.Article;
+import com.example.board.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.then;
 
 @ActiveProfiles("testdb")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 테스트데이터를 따로불러오지않고 다른것을가죠옴
@@ -49,8 +54,10 @@ class JpaRepositoryTest {
         long previousCount = articleRepository.count();
 
         //when
-        articleRepository.save(Article.of("new article", "new content", "#spring"));
+        UserAccount user = null;
+        articleRepository.save(Article.of(user,"new article", "new content", "#spring"));
         //then
+
         assertThat(articleRepository.count()).isEqualTo(previousCount +1);
     }
     @DisplayName("update 테스트")

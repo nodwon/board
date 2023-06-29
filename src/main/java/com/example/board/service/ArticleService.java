@@ -79,5 +79,6 @@ public class ArticleService {
     public List<ArticleDto> searchArticle(long l) {
         return null;
     }
+
 }
 

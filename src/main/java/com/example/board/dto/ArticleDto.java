@@ -4,6 +4,7 @@ import com.example.board.domain.Article;
 import com.example.board.domain.UserAccount;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 public record ArticleDto(
         Long id,
@@ -53,4 +54,7 @@ public record ArticleDto(
         );
     }
 
+    public Collection<Object> hashtagDtos() {
+        return null;
+    }
 }
