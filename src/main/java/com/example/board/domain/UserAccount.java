@@ -26,26 +26,29 @@ public class UserAccount extends AuditingFields{
     @Setter @Column(length = 100, name="nickname") private String nickname;
 
     @Setter @Column(name="memo") private String memo;
+    @Setter @Column(name = "hashtag") private String hashtag;
+
 
 
     protected UserAccount() {}
 
-    private UserAccount(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
+    private UserAccount(String userId, String userPassword, String email, String nickname, String memo, String hashtag,String createdBy) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.email = email;
         this.nickname = nickname;
         this.memo = memo;
+        this.hashtag =hashtag;
         this.createdBy = createdBy;
         this.modifiedBy = createdBy;
     }
 
-    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo) {
-        return UserAccount.of(userId, userPassword, email, nickname, memo, null);
+    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String hashtag) {
+        return UserAccount.of(userId, userPassword, email, nickname, memo, hashtag, null);
     }
 
-    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
-        return new UserAccount(userId, userPassword, email, nickname, memo, createdBy);
+    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo,String hashtag, String createdBy) {
+        return new UserAccount(userId, userPassword, email, nickname, memo, hashtag,createdBy);
     }
 
     @Override

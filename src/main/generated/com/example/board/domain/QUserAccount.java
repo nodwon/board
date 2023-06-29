@@ -29,6 +29,8 @@ public class QUserAccount extends EntityPathBase<UserAccount> {
 
     public final StringPath email = createString("email");
 
+    public final StringPath hashtag = createString("hashtag");
+
     public final StringPath memo = createString("memo");
 
     //inherited
