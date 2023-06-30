@@ -1,12 +1,12 @@
 package com.example.board.service;
 
 import com.example.board.domain.Article;
-import com.example.board.domain.QUserAccount;
 import com.example.board.domain.type.SearchType;
 import com.example.board.dto.ArticleDto;
 import com.example.board.dto.ArticleUpdateDto;
 import com.example.board.dto.ArticleWithCommentsDto;
 import com.example.board.repository.ArticleRepository;
+import com.example.board.repository.UserAccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final UserAccountRepository userAccountRepository;
 
     @Transactional(readOnly = true)
     public Page<ArticleDto> searchArticles(SearchType searchType, String search_keyword, Pageable pageable) {

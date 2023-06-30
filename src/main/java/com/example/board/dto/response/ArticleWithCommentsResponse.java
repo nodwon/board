@@ -1,6 +1,7 @@
 package com.example.board.dto.response;
 
 import com.example.board.dto.ArticleDto;
+import com.example.board.dto.ArticleWithCommentsDto;
 
 import java.time.LocalDateTime;
 
@@ -20,8 +21,7 @@ public record ArticleWithCommentsResponse(
     public static ArticleWithCommentsResponse of(Long id, String title, String content, String hashtags , LocalDateTime createdAt, String email, String nickname) {
         return new ArticleWithCommentsResponse(id, title, content, hashtags, createdAt, email, nickname);
     }
-
-    public static ArticleWithCommentsResponse from(ArticleDto dto) {
+    public static ArticleWithCommentsResponse from(ArticleWithCommentsDto dto) {
         String nickname = dto.userAccountDto().nickname();
         if (nickname == null || nickname.isBlank()) {
             nickname = dto.userAccountDto().userId();
@@ -40,7 +40,7 @@ public record ArticleWithCommentsResponse(
                 dto.userAccountDto().email(),
                 nickname
                 //dto.userAccountDto().userId()
-               // organizeChildComments(dto.articleCommentDtos())
+             //   organizeChildComments(dto.articleCommentDtos())
         );
     }
 

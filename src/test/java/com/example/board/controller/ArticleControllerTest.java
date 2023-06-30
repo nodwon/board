@@ -1,10 +1,12 @@
 package com.example.board.controller;
 
 import com.example.board.config.SecurityConfig;
+import com.example.board.domain.type.SearchType;
 import com.example.board.dto.ArticleDto;
 import com.example.board.dto.ArticleWithCommentsDto;
 import com.example.board.dto.UserAccountDto;
 import com.example.board.service.ArticleService;
+import com.example.board.service.PaginationService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,11 +16,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,6 +40,7 @@ class ArticleControllerTest {
 
     @MockBean // 테스트에서 배제하기위해 입출력을 보기위해
     private ArticleService articleService; //필드 주입
+    @MockBean private PaginationService paginationService;
 
     ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
@@ -44,17 +50,20 @@ class ArticleControllerTest {
     public void requestview() throws Exception {
         //given
         given(articleService.searchArticles(eq(null), eq(null), any())).willReturn(Page.empty());        //when
+        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0, 1, 2, 3, 4));
         // When & Then
 
+        // When & Then
         mvc.perform(get("/articles"))
-                .andExpect(status().isOk()) // 200 으로 떨어져야하고
-                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML)) // text.ht
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/index"))
-                .andExpect(model().attributeExists("articles")); // 이맵에 articles가 있는지
-
-        //then
+                .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attributeExists("paginationBarNumbers"))
+                .andExpect(model().attributeExists("searchTypes"));
+                //.andExpect(model().attribute("searchTypeHashtag", SearchType.HASHTAG));
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
-
+        then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
     @Disabled("구현중")
     @DisplayName("[view][Get] 게시글 상세페이지 = 페이지 정상 호출")
@@ -72,6 +81,35 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("articleComments")); // 이맵에 articles가 있는지
 
         //then
+    }
+
+    @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 페이징, 정렬 기능")
+    @Test
+    void givenPagingAndSortingParams_whenSearchingArticlesView_thenReturnsArticlesView() throws Exception {
+        // Given
+        String sortName = "title";
+        String direction = "desc";
+        int pageNumber = 0;
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.desc(sortName)));
+        List<Integer> barNumbers = List.of(1, 2, 3, 4, 5);
+        given(articleService.searchArticles(null, null, pageable)).willReturn(Page.empty());
+        given(paginationService.getPaginationBarNumbers(pageable.getPageNumber(), Page.empty().getTotalPages())).willReturn(barNumbers);
+
+        // When & Then
+        mvc.perform(
+                        get("/articles")
+                                .queryParam("page", String.valueOf(pageNumber))
+                                .queryParam("size", String.valueOf(pageSize))
+                                .queryParam("sort", sortName + "," + direction)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(view().name("articles/index"))
+                .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attribute("paginationBarNumbers", barNumbers));
+        then(articleService).should().searchArticles(null, null, pageable);
+        then(paginationService).should().getPaginationBarNumbers(pageable.getPageNumber(), Page.empty().getTotalPages());
     }
 
     @Disabled("구현중")
