@@ -2,6 +2,7 @@ package com.example.board.repository;
 
 import com.example.board.domain.Article;
 import com.example.board.domain.QArticle;
+import com.example.board.repository.querydsl.ArticleRepositoryCustom;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.core.types.dsl.StringExpression;
@@ -15,13 +16,16 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface ArticleRepository extends
-        JpaRepository<Article, Long>, QuerydslPredicateExecutor<Article>, // 기본적으로 Article에있는 기본 검사기능을 추가해줌
+        JpaRepository<Article, Long>,
+        ArticleRepositoryCustom,
+        QuerydslPredicateExecutor<Article>, // 기본적으로 Article에있는 기본 검사기능을 추가해줌
         QuerydslBinderCustomizer<QArticle> { // 부분검색을 추가하기 위해 binderCustomizer를 추가한다
     Page<Article> findByTitleContaining(String title, Pageable pageable);
     Page<Article> findByContentContaining(String content, Pageable pageable);
     Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable);
     Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
     Page<Article> findByUserAccount_Hashtag(String hashtag, Pageable pageable);
+    Page<Article> findByHashtag(String hashtag, Pageable pageable);
 
     @Override
     default void customize(QuerydslBindings bindings, QArticle root){

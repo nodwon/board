@@ -81,5 +81,20 @@ public class ArticleService {
         return null;
     }
 
+    @Transactional(readOnly = true)
+    public Page<ArticleDto> searchArticlesViaHashtag(String hastag, Pageable pageable) {
+        if(hastag == null || hastag.isBlank()){
+            return Page.empty(pageable);
+        }
+        return  articleRepository.findByHashtag(hastag, pageable).map(ArticleDto::from);
+    }
+
+    public List<String> getHashtags() {
+        return articleRepository.findAllDistinctHashtags();
+    }
+
+    public long getArticleCount() {
+        return  articleRepository.count();
+    }
 }
 
