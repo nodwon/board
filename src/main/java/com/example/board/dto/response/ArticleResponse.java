@@ -1,16 +1,17 @@
 package com.example.board.dto.response;
 
 import com.example.board.dto.ArticleDto;
+import com.example.board.dto.HashtagDto;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public record ArticleResponse(
         Long id,
         String title,
         String content,
-        String hashtags,
-        //Set<String> hashtags,
+        Set<String> hashtags,
         LocalDateTime createdAt,
         String email,
         String nickname
@@ -31,10 +32,10 @@ public record ArticleResponse(
                 dto.id(),
                 dto.title(),
                 dto.content(),
-                dto.hashtag()
-//                dto.hashtagDtos().stream()
-//                        .map(HashtagDto::hashtagName)
-//                        .collect(Collectors.toUnmodifiableSet())
+
+                dto.hashtagDtos().stream()
+                        .map(HashtagDto::hashtagName)
+                        .collect(Collectors.toUnmodifiableSet())
                 ,
                 dto.createdAt(),
                 dto.userAccountDto().email(),

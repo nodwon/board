@@ -67,7 +67,7 @@ public class ArticleService {
             if (dto.content() != null) {
                 article.setContent(dto.content());
             }
-            article.setHashtag(dto.hashtag());
+            article.clearHashtags();
             articleRepository.save(article);
         } catch (EntityNotFoundException e) {
             log.warn("게시글 업데이트 실페, 게시글을 찾을수 없습니다. -dto:{} ", dto);

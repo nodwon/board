@@ -15,6 +15,7 @@ public class SecurityConfig {
         http
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
+
                         .authorizationEndpoint(authorization -> authorization
                                 .baseUri("/login")
                         )

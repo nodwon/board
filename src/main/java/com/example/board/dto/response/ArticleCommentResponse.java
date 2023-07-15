@@ -4,6 +4,7 @@ import com.example.board.dto.ArticleCommentDto;
 
 import java.time.LocalDateTime;
 
+
 public record ArticleCommentResponse(
         Long id,
         String content,
@@ -32,8 +33,7 @@ public record ArticleCommentResponse(
                 dto.createdAt(),
                 dto.userAccountDto().email(),
                 nickname,
-                dto.userAccountDto().userId()
-                //dto.parentCommentId()
-        );
+                dto.userAccountDto().userId());
+              //  organizeChildComments(dto.articleCommentDtos())        );
     }
 }
