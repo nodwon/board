@@ -1,7 +1,6 @@
 package com.example.board.dto.response;
 
 import com.example.board.dto.ArticleCommentDto;
-import com.example.board.dto.ArticleDto;
 import com.example.board.dto.ArticleWithCommentsDto;
 import com.example.board.dto.HashtagDto;
 
@@ -25,8 +24,8 @@ public record ArticleWithCommentsResponse(
         Set<ArticleCommentResponse> articleCommentsResponse
 ) {
 
-    public static ArticleWithCommentsResponse of(Long id, String title, String content, String hashtags , LocalDateTime createdAt, String email, String nickname) {
-        return new ArticleWithCommentsResponse(id, title, content, hashtags, createdAt, email, nickname);
+    public static ArticleWithCommentsResponse of(Long id, String title, String content, Set<String> hashtags, LocalDateTime createdAt, String email, String nickname, String userId, Set<ArticleCommentResponse> articleCommentResponses) {
+        return new ArticleWithCommentsResponse(id, title, content, hashtags, createdAt, email, nickname, userId, articleCommentResponses);
     }
     public static ArticleWithCommentsResponse from(ArticleWithCommentsDto dto) {
         String nickname = dto.userAccountDto().nickname();
