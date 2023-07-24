@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 import javax.persistence.*;
-
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -20,7 +18,9 @@ public class ArticleComment extends AuditingFields{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter @ManyToOne(optional = false) private Article article; // 게시글 id
+    @Setter @ManyToOne(optional = false)
+    @JoinColumn(name = "article_id")
+    private Article article; // 게시글 id
     @Setter
     @JoinColumn(name = "user_id")
     @ManyToOne(optional = false)

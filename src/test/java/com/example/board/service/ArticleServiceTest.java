@@ -1,6 +1,6 @@
 package com.example.board.service;
 
-import com.example.board.domain.type.SearchType;
+import com.example.board.domain.constant.SearchType;
 import com.example.board.dto.ArticleDto;
 import com.example.board.repository.ArticleRepository;
 import com.example.board.repository.HashtagRepository;

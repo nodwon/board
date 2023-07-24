@@ -17,7 +17,6 @@ public record ArticleCommentResponse(
         String userId,
         Long parentCommentId,
         Set<ArticleCommentResponse> childComments
-
 ) {
 
     public static ArticleCommentResponse of(Long id, String content, LocalDateTime createdAt, String email, String nickname, String userId) {
@@ -51,6 +50,5 @@ public record ArticleCommentResponse(
     public boolean hasParentComment() {
         return parentCommentId != null;
     }
-
 
 }

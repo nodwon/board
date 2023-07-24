@@ -1,8 +1,8 @@
 package com.example.board.repository;
 
 import com.example.board.domain.Article;
-import com.example.board.domain.ArticleProjection;
 import com.example.board.domain.QArticle;
+import com.example.board.domain.projection.ArticleProjection;
 import com.example.board.repository.querydsl.ArticleRepositoryCustom;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
