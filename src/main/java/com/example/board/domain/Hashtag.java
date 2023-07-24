@@ -1,10 +1,10 @@
 package com.example.board.domain;
 
-import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -21,7 +21,7 @@ public class Hashtag extends AuditingFields {
     @ManyToMany(mappedBy = "hashtags")
     private Set<Article> articles = new LinkedHashSet<>();
 
-    @Setter @Column(name = "hashtagName", nullable = false, unique = true) private String hashtagName;
+    @Setter @Column( nullable = false, unique = true) private String hashtagName;
 
     protected Hashtag() {}
     private Hashtag(String hashtagName) {

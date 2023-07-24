@@ -4,7 +4,6 @@ import com.example.board.domain.Article;
 import com.example.board.domain.UserAccount;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 

@@ -1,10 +1,11 @@
 package com.example.board.controller;
-import com.example.board.domain.type.SearchType;
 
-import com.example.board.dto.UserAccountDto;
+import com.example.board.domain.constant.FormStatus;
+import com.example.board.domain.constant.SearchType;
 import com.example.board.dto.request.ArticleRequest;
 import com.example.board.dto.response.ArticleResponse;
 import com.example.board.dto.response.ArticleWithCommentsResponse;
+import com.example.board.dto.security.BoardPrincipal;
 import com.example.board.service.ArticleService;
 import com.example.board.service.PaginationService;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +53,8 @@ public class ArticleController {
         ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
 
         map.addAttribute("article", article);
-//        map.addAttribute("articleComments", article.articleCommentsResponse());
-//        map.addAttribute("totalCount", articleService.getArticleCount());
+        map.addAttribute("articleComments", article.articleCommentsResponse());
+        map.addAttribute("totalCount", articleService.getArticleCount());
         map.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
 
         return "articles/detail";
@@ -77,12 +78,10 @@ public class ArticleController {
     }
     @PostMapping("/form")
     public String postNewArticle(
+            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
             ArticleRequest articleRequest
     ) {
-        articleService.saveArticle(articleRequest.toDto(UserAccountDto.of(
-                "uno","asdf1234","uno@email","nod","3",null, null, null,"#yellow"
-
-        )));
+        articleService.saveArticle(articleRequest.toDto(boardPrincipal.toDto()));
 
         return "redirect:/articles";
     }
@@ -92,16 +91,30 @@ public class ArticleController {
         ArticleResponse article = ArticleResponse.from(articleService.getArticle(articleId));
 
         map.addAttribute("article", article);
-        //map.addAttribute("formStatus", FormStatus.UPDATE);
+        map.addAttribute("formStatus", FormStatus.UPDATE);
 
         return "articles/form";
     }
+
+    @PostMapping("/{articleId}/form")
+    public String updateArticle(
+            @PathVariable Long articleId,
+            @AuthenticationPrincipal BoardPrincipal boardPrincipal,
+            ArticleRequest articleRequest
+    ) {
+        articleService.updateArticle(articleId, articleRequest.toDto(boardPrincipal.toDto()));
+
+        return "redirect:/articles/" + articleId;
+    }
+
     @PostMapping("/{articleId}/delete")
-    public String deleteArticle(@PathVariable Long articleId){
-        articleService.deleteArticle(articleId);
+    public String deleteArticle(
+            @PathVariable Long articleId,
+            @AuthenticationPrincipal BoardPrincipal boardPrincipal
+    ) {
+        articleService.deleteArticle(articleId, boardPrincipal.getUsername());
 
         return "redirect:/articles";
     }
-
 
 }

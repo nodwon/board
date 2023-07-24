@@ -1,7 +1,6 @@
 package com.example.board.repository;
 
 import com.example.board.domain.ArticleComment;
-import com.example.board.domain.QArticle;
 import com.example.board.domain.QArticleComment;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;

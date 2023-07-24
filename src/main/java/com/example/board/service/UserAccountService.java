@@ -3,9 +3,9 @@ package com.example.board.service;
 import com.example.board.domain.UserAccount;
 import com.example.board.dto.UserAccountDto;
 import com.example.board.repository.UserAccountRepository;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
