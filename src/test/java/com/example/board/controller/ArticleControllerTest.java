@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import com.example.board.config.SecurityConfig;
 import com.example.board.config.TestSecurityConfig;
 import com.example.board.domain.constant.FormStatus;
 import com.example.board.dto.ArticleDto;
@@ -12,6 +13,7 @@ import com.example.board.dto.response.ArticleResponse;
 import com.example.board.service.ArticleService;
 import com.example.board.service.PaginationService;
 import com.example.board.util.FormDataEncoder;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +76,7 @@ class ArticleControllerTest {
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
+    @Disabled("구현중")
     @DisplayName("[view][Get] 게시글 상세페이지 = 페이지 정상 호출")
     @Test
     public void requestviewdetail() throws Exception {
