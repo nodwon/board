@@ -18,6 +18,11 @@ public record ArticleRequest(
     }
 
     public ArticleDto toDto(UserAccountDto userAccountDto, Set<HashtagDto> hashtagDtos){
-        return  toDto(userAccountDto, null);
+        return ArticleDto.of(
+                userAccountDto,
+                title,
+                content,
+                hashtagDtos
+        );
     }
 }

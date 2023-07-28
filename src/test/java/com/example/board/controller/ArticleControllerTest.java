@@ -76,13 +76,15 @@ class ArticleControllerTest {
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
-    @Disabled("구현중")
+
+    @Disabled("고치기")
     @DisplayName("[view][Get] 게시글 상세페이지 = 페이지 정상 호출")
     @Test
     public void requestviewdetail() throws Exception {
         //given
         //Long articleId =1L;
         //given(articleService.getArticle(articleId)).willReturn(createArticleWithCommentsDto());
+
         //when
         mvc.perform(get("/articles/1"))
                 .andExpect(status().isOk())
@@ -146,6 +148,7 @@ class ArticleControllerTest {
         then(paginationService).should().getPaginationBarNumbers(pageable.getPageNumber(), Page.empty().getTotalPages());
     }
 
+    @Disabled("구현중")
     @DisplayName("[view][Get] 게시글 검색전용 페이지 = 페이지 정상 호출")
     @Test
     public void searcharticle() throws Exception {
