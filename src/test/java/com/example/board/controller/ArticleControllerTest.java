@@ -1,6 +1,5 @@
 package com.example.board.controller;
 
-import com.example.board.config.SecurityConfig;
 import com.example.board.config.TestSecurityConfig;
 import com.example.board.domain.constant.FormStatus;
 import com.example.board.dto.ArticleDto;
@@ -77,7 +76,7 @@ class ArticleControllerTest {
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
 
-    @Disabled("고치기")
+    @Disabled("loginpage로인한 안쓴느")
     @DisplayName("[view][Get] 게시글 상세페이지 = 페이지 정상 호출")
     @Test
     public void requestviewdetail() throws Exception {
