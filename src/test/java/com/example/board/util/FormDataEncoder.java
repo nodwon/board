@@ -11,11 +11,13 @@ import java.util.Map;
 
 @TestComponent
 public class FormDataEncoder {
+
     private final ObjectMapper mapper;
 
     public FormDataEncoder(ObjectMapper mapper) {
         this.mapper = mapper;
     }
+
 
     public String encode(Object obj) {
         Map<String, String> fieldMap = mapper.convertValue(obj, new TypeReference<>() {});

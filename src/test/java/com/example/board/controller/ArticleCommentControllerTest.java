@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import com.example.board.config.TestSecurityConfig;
 import com.example.board.dto.ArticleCommentDto;
 import com.example.board.dto.request.ArticleCommentRequest;
 import com.example.board.service.ArticleCommentService;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -24,6 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("view 컨트롤러 - 댓글")
+@Import({TestSecurityConfig.class, FormDataEncoder.class})
 @WebMvcTest(ArticleCommentController.class)
 class ArticleCommentControllerTest {
     
@@ -79,7 +82,7 @@ class ArticleCommentControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles/" + articleId))
                 .andExpect(redirectedUrl("/articles/" + articleId));
-        then(articleCommentService).should().deleteArticleComment(articleCommentId, userId);
+        then(articleCommentService).should().deleteArticleComment(articleCommentId,userId);
     }
 
     @WithUserDetails(value = "unoTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
