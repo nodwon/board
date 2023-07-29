@@ -54,7 +54,4 @@ public record ArticleCommentDto(
         );
     }
 
-    public Set<ArticleCommentDto> articleCommentDtos() {
-        return null;
-    }
 }
